@@ -1,0 +1,79 @@
+
+<div class="d-flex align-items-center justify-content-center">
+  <h1>
+        Random Recipe!
+  </h1>
+</div>
+
+<br>
+<div>
+  <%= form_tag(randingredient_path, method: :get, class: "text-center container") do %>
+    <%= label_tag :param1, "Please Select A Type Of Recipe", class: "form-label" %>
+    <div class="d-flex justify-content-between container col-md-3">
+    <%= select_tag(:param1, options_for_select(['Any', 'Breakfast', 'Lunch', 'Dinner', 'Dessert']), class: "form-control bg-secondary text-light") %>
+    <%= submit_tag("Find Recipe", class: "btn btn-warning") %>
+    </div>
+  <% end %>
+</div>
+
+<hr>
+
+<br>
+<div class="text-center container col-md-2">
+  <% if flash[:notice].present? %>
+    <div class="alert alert-warning">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+</div>
+
+<% if !@random_ingredient.nil? and !@random_ingredient.new_record? %>
+  <h1 class="text-center">
+    <%= @random_ingredient.name %>
+  </h1>
+
+    <div class="container text-center">
+        <div class="card shadow-sm text-light bg-dark mx-auto" style="max-width: 65%;">
+          <%= image_tag @random_ingredient.user_shot_url, class: "card-img-top" %>
+        </div>
+    </div>
+  </div>
+  <br>
+  <div class="container col-md-7">
+  <div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Ingredients
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+        <div class="accordion-body overflow-auto" style="max-width: 100%;">
+          <div class = "whitespace-pre">
+            <p class="card-text"><%= simple_format(@random_ingredient.recipe) %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Instructions
+        </button>
+      </h2>
+      <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div class="accordion-body overflow-auto" style="max-width: 100%;">
+          <div class = "whitespace-pre">
+            <p class="card-text"><%= simple_format(@random_ingredient.instructions) %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <br>
+  <br>
+    <center><h4>If you dont like this recipe generate a new one!</h4></center>
+  <br>
+  <br>
+<% end %>

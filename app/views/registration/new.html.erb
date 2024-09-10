@@ -1,0 +1,45 @@
+<% if flash[:alert].present? %>
+    <div class="alert alert-warning">
+        <%= flash[:alert] %>
+    </div>
+<% end %>
+
+<div class="container col-md-4">
+    <div class="text-center">
+        <h1>Sign Up</h1>
+    </div>
+</div>
+    <%= form_with(model: @user_info, url: signup_path) do |form| %>
+        <% if @user_info.errors.any? %>
+            <div class="alert alert-danger">
+                <h2><%= pluralize(@user_info.errors.count, "issue") %> when creating your account:</h2>
+
+                <ul>
+                <% @user_info.errors.each do |error| %>
+                    <li><%= error.full_message %></li>
+                <% end %>
+                </ul>
+            </div>
+        <% end %>
+        <div class="container col-md-4">
+            <div class="mb-3">
+                <%= form.label :username%>
+                <%= form.text_field :username, class: "form-control"%>
+            </div>
+            <div class="mb-3">
+                <%= form.label :password%>
+                <%= form.password_field :password, class: "form-control"%>
+            </div>
+            <div class="mb-3">
+                <%= form.label :password_confirmation%>
+                <%= form.password_field :password_confirmation, class: "form-control"%>
+            </div>
+            <div class="mb-3">
+                <%= form.submit "Sign Up", class:"btn btn-dark"%>
+            </div>
+        </div>
+    <%end%>
+
+
+
+
